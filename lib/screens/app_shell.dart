@@ -3,6 +3,8 @@ import '../theme/app_colors.dart';
 import '../theme/app_spacing.dart';
 import '../theme/app_text_styles.dart';
 import 'home_screen.dart';
+import '../data/mock_saved_cards.dart';
+import '../widgets/saved_card_list_item.dart';
 
 class AppShell extends StatefulWidget {
   const AppShell({super.key});
@@ -70,19 +72,25 @@ class _WalletScreen extends StatelessWidget {
           padding: const EdgeInsets.all(AppSpacing.lg),
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
-            children: const [
-              SizedBox(height: AppSpacing.md),
-              Text('My Wallet', style: AppTextStyles.h1),
-              SizedBox(height: AppSpacing.sm),
-              Text(
-                'All your reward cards in one place.',
+            children: [
+              const SizedBox(height: AppSpacing.md),
+              const Text('My Wallet', style: AppTextStyles.h1),
+              const SizedBox(height: AppSpacing.sm),
+              const Text(
+                'Your saved memberships and external loyalty cards.',
                 style: AppTextStyles.bodySecondary,
               ),
-              SizedBox(height: AppSpacing.xl),
-              _PlaceholderBlock(
-                title: 'Wallet screen coming next',
-                subtitle:
-                    'In the next steps, this can show a full vertical list of member cards.',
+              const SizedBox(height: AppSpacing.xl),
+              Expanded(
+                child: ListView.separated(
+                  itemCount: mockSavedCards.length,
+                  separatorBuilder: (_, __) =>
+                      const SizedBox(height: AppSpacing.lg),
+                  itemBuilder: (context, index) {
+                    final card = mockSavedCards[index];
+                    return SavedCardListItem(card: card);
+                  },
+                ),
               ),
             ],
           ),
