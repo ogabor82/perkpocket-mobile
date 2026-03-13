@@ -8,6 +8,7 @@ import '../widgets/reward_card.dart';
 import '../widgets/saved_card_list_item.dart';
 import 'home_screen.dart';
 import 'add_card_screen.dart';
+import 'saved_card_detail_screen.dart';
 
 class AppShell extends StatefulWidget {
   const AppShell({super.key});
@@ -124,7 +125,16 @@ class _WalletScreen extends StatelessWidget {
                     const SizedBox(height: AppSpacing.lg),
                 itemBuilder: (context, index) {
                   final card = mockSavedCards[index];
-                  return SavedCardListItem(card: card);
+                  return SavedCardListItem(
+                    card: card,
+                    onTap: () {
+                      Navigator.of(context).push(
+                        MaterialPageRoute(
+                          builder: (_) => SavedCardDetailScreen(card: card),
+                        ),
+                      );
+                    },
+                  );
                 },
               ),
             ],
