@@ -5,7 +5,14 @@ import '../theme/app_spacing.dart';
 import '../theme/app_text_styles.dart';
 
 class ManualAddCardScreen extends StatefulWidget {
-  const ManualAddCardScreen({super.key});
+  final String? initialCodeValue;
+  final String? initialCodeType;
+
+  const ManualAddCardScreen({
+    super.key,
+    this.initialCodeValue,
+    this.initialCodeType,
+  });
 
   @override
   State<ManualAddCardScreen> createState() => _ManualAddCardScreenState();
@@ -28,6 +35,21 @@ class _ManualAddCardScreenState extends State<ManualAddCardScreen> {
   ];
 
   @override
+  void initState() {
+    super.initState();
+
+    if (widget.initialCodeValue != null &&
+        widget.initialCodeValue!.trim().isNotEmpty) {
+      _codeValueController.text = widget.initialCodeValue!;
+    }
+
+    final incomingType = widget.initialCodeType?.toLowerCase();
+    if (incomingType != null && _codeTypes.contains(incomingType)) {
+      _selectedCodeType = incomingType;
+    }
+  }
+
+  @override
   void dispose() {
     _merchantController.dispose();
     _labelController.dispose();
@@ -47,6 +69,9 @@ class _ManualAddCardScreenState extends State<ManualAddCardScreen> {
 
   @override
   Widget build(BuildContext context) {
+    final wasScanned =
+        widget.initialCodeValue != null && widget.initialCodeValue!.isNotEmpty;
+
     return Scaffold(
       body: SafeArea(
         child: SingleChildScrollView(
@@ -61,11 +86,50 @@ class _ManualAddCardScreenState extends State<ManualAddCardScreen> {
                 style: AppTextStyles.h1,
               ),
               const SizedBox(height: AppSpacing.sm),
-              const Text(
-                'Enter the card details below so you can access it later from your wallet.',
+              Text(
+                wasScanned
+                    ? 'We pre-filled the scanned code. Add the remaining details below.'
+                    : 'Enter the card details below so you can access it later from your wallet.',
                 style: AppTextStyles.bodySecondary,
               ),
               const SizedBox(height: AppSpacing.xl),
+              if (wasScanned) ...[
+                Container(
+                  width: double.infinity,
+                  padding: const EdgeInsets.all(AppSpacing.lg),
+                  decoration: BoxDecoration(
+                    color: AppColors.primary.withValues(alpha: 0.08),
+                    borderRadius: BorderRadius.circular(AppRadius.lg),
+                    border: Border.all(
+                      color: AppColors.primary.withValues(alpha: 0.18),
+                    ),
+                  ),
+                  child: Row(
+                    children: [
+                      Container(
+                        width: 40,
+                        height: 40,
+                        decoration: BoxDecoration(
+                          color: AppColors.primary.withValues(alpha: 0.14),
+                          borderRadius: BorderRadius.circular(AppRadius.md),
+                        ),
+                        child: const Icon(
+                          Icons.check_circle_rounded,
+                          color: AppColors.primary,
+                        ),
+                      ),
+                      const SizedBox(width: AppSpacing.md),
+                      const Expanded(
+                        child: Text(
+                          'Code detected successfully. Complete the missing card details.',
+                          style: AppTextStyles.bodySecondary,
+                        ),
+                      ),
+                    ],
+                  ),
+                ),
+                const SizedBox(height: AppSpacing.xl),
+              ],
               Container(
                 width: double.infinity,
                 padding: const EdgeInsets.all(AppSpacing.xl),

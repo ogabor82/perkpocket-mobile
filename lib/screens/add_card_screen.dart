@@ -4,6 +4,7 @@ import '../theme/app_radius.dart';
 import '../theme/app_spacing.dart';
 import '../theme/app_text_styles.dart';
 import 'manual_add_card_screen.dart';
+import 'scan_card_screen.dart';
 
 class AddCardScreen extends StatelessWidget {
   const AddCardScreen({super.key});
@@ -36,11 +37,11 @@ class AddCardScreen extends StatelessWidget {
                 subtitle:
                     'Use your camera to scan a barcode or QR code from a physical loyalty card.',
                 onTap: () {
-                  ScaffoldMessenger.of(context).showSnackBar(
-                    const SnackBar(
-                      content: Text('Scanner screen comes in a later step.'),
-                    ),
-                  );
+                  Navigator.of(context).push(
+                        MaterialPageRoute(
+                        builder: (_) => ScanCardScreen(),
+                        ),
+                    );
                 },
               ),
               const SizedBox(height: AppSpacing.lg),
