@@ -1,8 +1,10 @@
 import 'package:flutter/material.dart';
+import '../data/mock_cards.dart';
 import '../theme/app_colors.dart';
 import '../theme/app_radius.dart';
 import '../theme/app_spacing.dart';
 import '../theme/app_text_styles.dart';
+import '../widgets/reward_card.dart';
 
 class HomeScreen extends StatelessWidget {
   const HomeScreen({super.key});
@@ -159,49 +161,10 @@ class _CardListPlaceholder extends StatelessWidget {
       height: 180,
       child: ListView.separated(
         scrollDirection: Axis.horizontal,
-        itemCount: 3,
+        itemCount: mockCards.length,
         separatorBuilder: (_, __) => const SizedBox(width: AppSpacing.lg),
         itemBuilder: (context, index) {
-          return Container(
-            width: 260,
-            decoration: BoxDecoration(
-              color: index == 0
-                  ? AppColors.cardRed
-                  : index == 1
-                      ? AppColors.cardBlue
-                      : AppColors.cardGold,
-              borderRadius: BorderRadius.circular(AppRadius.xl),
-            ),
-            padding: const EdgeInsets.all(AppSpacing.lg),
-            child: Column(
-              crossAxisAlignment: CrossAxisAlignment.start,
-              children: [
-                const CircleAvatar(
-                  radius: 18,
-                  backgroundColor: Colors.white24,
-                  child: Icon(Icons.card_giftcard, color: Colors.white),
-                ),
-                const Spacer(),
-                const Text(
-                  'Demo Rewards',
-                  style: TextStyle(
-                    color: Colors.white,
-                    fontSize: 22,
-                    fontWeight: FontWeight.w700,
-                  ),
-                ),
-                const SizedBox(height: AppSpacing.sm),
-                Text(
-                  '${index + 2}/10 collected',
-                  style: const TextStyle(
-                    color: Colors.white70,
-                    fontSize: 14,
-                    fontWeight: FontWeight.w500,
-                  ),
-                ),
-              ],
-            ),
-          );
+          return RewardCard(card: mockCards[index]);
         },
       ),
     );
