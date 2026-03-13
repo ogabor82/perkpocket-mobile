@@ -5,6 +5,7 @@ import '../theme/app_radius.dart';
 import '../theme/app_spacing.dart';
 import '../theme/app_text_styles.dart';
 import '../widgets/reward_card.dart';
+import '../screens/member_code_screen.dart';
 
 class CardDetailScreen extends StatelessWidget {
   final RewardCardModel card;
@@ -47,7 +48,13 @@ class CardDetailScreen extends StatelessWidget {
               SizedBox(
                 width: double.infinity,
                 child: ElevatedButton(
-                  onPressed: () {},
+                  onPressed: () {
+                    Navigator.of(context).push(
+                        MaterialPageRoute(
+                        builder: (_) => MemberCodeScreen(card: card),
+                        ),
+                    );
+                    },
                   style: ElevatedButton.styleFrom(
                     backgroundColor: AppColors.textPrimary,
                     foregroundColor: Colors.white,
