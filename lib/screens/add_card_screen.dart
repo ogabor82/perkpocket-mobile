@@ -3,6 +3,7 @@ import '../theme/app_colors.dart';
 import '../theme/app_radius.dart';
 import '../theme/app_spacing.dart';
 import '../theme/app_text_styles.dart';
+import 'manual_add_card_screen.dart';
 
 class AddCardScreen extends StatelessWidget {
   const AddCardScreen({super.key});
@@ -50,12 +51,12 @@ class AddCardScreen extends StatelessWidget {
                 subtitle:
                     'Enter the merchant name, card label, and code details yourself.',
                 onTap: () {
-                  ScaffoldMessenger.of(context).showSnackBar(
-                    const SnackBar(
-                      content: Text('Manual add form comes in the next step.'),
-                    ),
-                  );
-                },
+                    Navigator.of(context).push(
+                        MaterialPageRoute(
+                        builder: (_) => const ManualAddCardScreen(),
+                        ),
+                    );
+                    },
               ),
             ],
           ),
