@@ -18,6 +18,7 @@ class RewardCard extends StatelessWidget {
 
     return Container(
       width: 260,
+      height: 180,
       padding: const EdgeInsets.all(AppSpacing.lg),
       decoration: BoxDecoration(
         color: card.backgroundColor,

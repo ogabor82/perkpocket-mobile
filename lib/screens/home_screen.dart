@@ -5,6 +5,7 @@ import '../theme/app_radius.dart';
 import '../theme/app_spacing.dart';
 import '../theme/app_text_styles.dart';
 import '../widgets/reward_card.dart';
+import '../screens/card_detail_screen.dart';
 
 class HomeScreen extends StatelessWidget {
   const HomeScreen({super.key});
@@ -164,7 +165,18 @@ class _CardListPlaceholder extends StatelessWidget {
         itemCount: mockCards.length,
         separatorBuilder: (_, __) => const SizedBox(width: AppSpacing.lg),
         itemBuilder: (context, index) {
-          return RewardCard(card: mockCards[index]);
+          final card = mockCards[index];
+
+          return GestureDetector(
+            onTap: () {
+              Navigator.of(context).push(
+                MaterialPageRoute(
+                  builder: (_) => CardDetailScreen(card: card),
+                ),
+              );
+            },
+            child: RewardCard(card: card),
+          );
         },
       ),
     );
