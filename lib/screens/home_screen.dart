@@ -54,28 +54,59 @@ class _TopBar extends StatelessWidget {
     return Row(
       children: [
         Container(
-          width: 44,
-          height: 44,
+          width: 48,
+          height: 48,
           decoration: BoxDecoration(
             color: AppColors.surface,
             borderRadius: BorderRadius.circular(AppRadius.lg),
+            boxShadow: [
+              BoxShadow(
+                color: Colors.black.withValues(alpha: 0.03),
+                blurRadius: 12,
+                offset: const Offset(0, 6),
+              ),
+            ],
           ),
           child: const Icon(
-            Icons.menu_rounded,
+            Icons.grid_view_rounded,
             color: AppColors.textPrimary,
+            size: 22,
           ),
         ),
         const Spacer(),
         Container(
-          width: 44,
-          height: 44,
+          padding: const EdgeInsets.symmetric(
+            horizontal: AppSpacing.md,
+            vertical: AppSpacing.sm,
+          ),
           decoration: BoxDecoration(
             color: AppColors.surface,
-            borderRadius: BorderRadius.circular(AppRadius.lg),
+            borderRadius: BorderRadius.circular(AppRadius.pill),
+            boxShadow: [
+              BoxShadow(
+                color: Colors.black.withValues(alpha: 0.03),
+                blurRadius: 12,
+                offset: const Offset(0, 6),
+              ),
+            ],
           ),
-          child: const Icon(
-            Icons.notifications_none_rounded,
-            color: AppColors.textPrimary,
+          child: const Row(
+            children: [
+              CircleAvatar(
+                radius: 14,
+                backgroundColor: AppColors.primary,
+                child: Icon(
+                  Icons.person_rounded,
+                  size: 16,
+                  color: Colors.white,
+                ),
+              ),
+              SizedBox(width: AppSpacing.sm),
+              Text(
+                'Gábor',
+                style: AppTextStyles.caption,
+              ),
+            ],
           ),
         ),
       ],
@@ -91,10 +122,13 @@ class _WelcomeSection extends StatelessWidget {
     return const Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
-        Text('Hello, Gábor!', style: AppTextStyles.hero),
+        Text(
+          'Your rewards,\nall in one place',
+          style: AppTextStyles.hero,
+        ),
         SizedBox(height: AppSpacing.sm),
         Text(
-          'Collect perks and rewards from your favorite places.',
+          'Track loyalty cards, unlock perks, and keep your favorite memberships close at hand.',
           style: AppTextStyles.bodySecondary,
         ),
       ],
@@ -108,11 +142,18 @@ class _SearchField extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Container(
-      height: 56,
+      height: 58,
       padding: const EdgeInsets.symmetric(horizontal: AppSpacing.lg),
       decoration: BoxDecoration(
         color: AppColors.surface,
         borderRadius: BorderRadius.circular(AppRadius.xl),
+        boxShadow: [
+          BoxShadow(
+            color: Colors.black.withValues(alpha: 0.03),
+            blurRadius: 16,
+            offset: const Offset(0, 8),
+          ),
+        ],
       ),
       child: const Row(
         children: [
@@ -120,7 +161,7 @@ class _SearchField extends StatelessWidget {
           SizedBox(width: AppSpacing.md),
           Expanded(
             child: Text(
-              'Search merchants or rewards',
+              'Search cards, rewards, merchants...',
               style: AppTextStyles.bodySecondary,
             ),
           ),
@@ -146,9 +187,21 @@ class _SectionHeader extends StatelessWidget {
       children: [
         Text(title, style: AppTextStyles.title),
         const Spacer(),
-        Text(
-          actionLabel,
-          style: AppTextStyles.caption,
+        TextButton(
+          onPressed: () {},
+          style: TextButton.styleFrom(
+            foregroundColor: AppColors.primary,
+            padding: EdgeInsets.zero,
+            minimumSize: const Size(0, 0),
+            tapTargetSize: MaterialTapTargetSize.shrinkWrap,
+          ),
+          child: Text(
+            actionLabel,
+            style: const TextStyle(
+              fontSize: 13,
+              fontWeight: FontWeight.w600,
+            ),
+          ),
         ),
       ],
     );
@@ -159,7 +212,7 @@ class _CardListPlaceholder extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return SizedBox(
-      height: 180,
+      height: 190,
       child: ListView.separated(
         scrollDirection: Axis.horizontal,
         itemCount: mockCards.length,
@@ -194,14 +247,39 @@ class _OfferPlaceholder extends StatelessWidget {
       decoration: BoxDecoration(
         color: AppColors.surface,
         borderRadius: BorderRadius.circular(AppRadius.xl),
+        boxShadow: [
+          BoxShadow(
+            color: Colors.black.withValues(alpha: 0.03),
+            blurRadius: 16,
+            offset: const Offset(0, 8),
+          ),
+        ],
       ),
       child: const Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
-          Text('Free coffee after 10 visits', style: AppTextStyles.title),
-          SizedBox(height: AppSpacing.sm),
+          Row(
+            children: [
+              CircleAvatar(
+                radius: 20,
+                backgroundColor: AppColors.surfaceSoft,
+                child: Icon(
+                  Icons.local_offer_rounded,
+                  color: AppColors.primary,
+                ),
+              ),
+              SizedBox(width: AppSpacing.md),
+              Expanded(
+                child: Text(
+                  'Free coffee after 10 visits',
+                  style: AppTextStyles.title,
+                ),
+              ),
+            ],
+          ),
+          SizedBox(height: AppSpacing.lg),
           Text(
-            'Discover nearby merchants with simple digital reward cards.',
+            'Discover nearby merchants with beautifully simple digital reward cards and member perks.',
             style: AppTextStyles.bodySecondary,
           ),
         ],

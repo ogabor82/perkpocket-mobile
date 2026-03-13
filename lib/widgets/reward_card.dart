@@ -17,17 +17,17 @@ class RewardCard extends StatelessWidget {
     final progressRatio = card.currentPoints / card.targetPoints;
 
     return Container(
-      width: 260,
-      height: 180,
+      width: 268,
+      height: 186,
       padding: const EdgeInsets.all(AppSpacing.lg),
       decoration: BoxDecoration(
         color: card.backgroundColor,
         borderRadius: BorderRadius.circular(AppRadius.xl),
         boxShadow: [
           BoxShadow(
-            color: Colors.black.withValues(alpha: 0.08),
-            blurRadius: 18,
-            offset: const Offset(0, 10),
+            color: Colors.black.withValues(alpha: 0.10),
+            blurRadius: 20,
+            offset: const Offset(0, 12),
           ),
         ],
       ),
@@ -37,8 +37,8 @@ class RewardCard extends StatelessWidget {
           Row(
             children: [
               Container(
-                width: 42,
-                height: 42,
+                width: 44,
+                height: 44,
                 decoration: BoxDecoration(
                   color: Colors.white24,
                   borderRadius: BorderRadius.circular(AppRadius.lg),
@@ -46,15 +46,26 @@ class RewardCard extends StatelessWidget {
                 child: Icon(
                   card.icon,
                   color: Colors.white,
+                  size: 22,
                 ),
               ),
               const Spacer(),
-              Text(
-                progressText,
-                style: const TextStyle(
-                  color: Colors.white,
-                  fontSize: 16,
-                  fontWeight: FontWeight.w700,
+              Container(
+                padding: const EdgeInsets.symmetric(
+                  horizontal: AppSpacing.md,
+                  vertical: AppSpacing.sm,
+                ),
+                decoration: BoxDecoration(
+                  color: Colors.white24,
+                  borderRadius: BorderRadius.circular(AppRadius.pill),
+                ),
+                child: Text(
+                  progressText,
+                  style: const TextStyle(
+                    color: Colors.white,
+                    fontSize: 13,
+                    fontWeight: FontWeight.w700,
+                  ),
                 ),
               ),
             ],
@@ -64,9 +75,9 @@ class RewardCard extends StatelessWidget {
             card.merchantName,
             style: const TextStyle(
               color: Colors.white,
-              fontSize: 22,
+              fontSize: 24,
               fontWeight: FontWeight.w700,
-              height: 1.1,
+              height: 1.05,
             ),
             maxLines: 2,
             overflow: TextOverflow.ellipsis,
@@ -85,7 +96,7 @@ class RewardCard extends StatelessWidget {
             borderRadius: BorderRadius.circular(AppRadius.pill),
             child: LinearProgressIndicator(
               value: progressRatio,
-              minHeight: 8,
+              minHeight: 9,
               backgroundColor: Colors.white24,
               valueColor: const AlwaysStoppedAnimation<Color>(Colors.white),
             ),
