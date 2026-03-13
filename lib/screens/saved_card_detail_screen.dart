@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:barcode_widget/barcode_widget.dart';
 import '../models/saved_card_model.dart';
 import '../theme/app_colors.dart';
 import '../theme/app_radius.dart';
@@ -188,7 +189,7 @@ class _BarcodeCard extends StatelessWidget {
             ),
             child: Column(
               children: [
-                _BarcodePlaceholder(codeValue: card.codeValue),
+                _RealBarcodeWidget(card: card),
                 const SizedBox(height: AppSpacing.lg),
                 Text(
                   card.codeValue,
@@ -209,41 +210,54 @@ class _BarcodeCard extends StatelessWidget {
   }
 }
 
-class _BarcodePlaceholder extends StatelessWidget {
-  final String codeValue;
+class _RealBarcodeWidget extends StatelessWidget {
+  final SavedCardModel card;
 
-  const _BarcodePlaceholder({
-    required this.codeValue,
+  const _RealBarcodeWidget({
+    required this.card,
   });
+
+  Barcode _resolveBarcodeType() {
+    switch (card.codeType.toLowerCase()) {
+      case 'ean13':
+        return Barcode.ean13();
+      case 'ean8':
+        return Barcode.ean8();
+      case 'code128':
+        return Barcode.code128();
+      case 'qr':
+        return Barcode.qrCode();
+      default:
+        return Barcode.code128();
+    }
+  }
 
   @override
   Widget build(BuildContext context) {
-    final chars = codeValue.split('');
-    final bars = List.generate(chars.length * 3, (index) {
-      final seed = (index + codeValue.length) % 5;
-      return seed == 0 || seed == 3 ? 4.0 : 2.0;
-    });
+    final barcode = _resolveBarcodeType();
+    final isQr = card.codeType.toLowerCase() == 'qr';
 
-    return SizedBox(
-      height: 120,
-      child: Row(
-        mainAxisAlignment: MainAxisAlignment.center,
-        children: bars.map((width) {
-          return Container(
-            margin: const EdgeInsets.symmetric(horizontal: 1.2),
-            width: width,
-            height: double.infinity,
-            decoration: BoxDecoration(
-              color: AppColors.textPrimary,
-              borderRadius: BorderRadius.circular(2),
-            ),
-          );
-        }).toList(),
-      ),
+    return BarcodeWidget(
+      barcode: barcode,
+      data: card.codeValue,
+      width: double.infinity,
+      height: isQr ? 180 : 100,
+      drawText: false,
+      color: AppColors.textPrimary,
+      backgroundColor: Colors.transparent,
+      errorBuilder: (context, error) {
+        return Container(
+          height: 100,
+          alignment: Alignment.center,
+          child: Text(
+            'Unsupported barcode data',
+            style: AppTextStyles.bodySecondary,
+          ),
+        );
+      },
     );
   }
 }
-
 class _MetaInfoCard extends StatelessWidget {
   final SavedCardModel card;
 

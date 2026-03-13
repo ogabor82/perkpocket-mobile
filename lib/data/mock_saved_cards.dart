@@ -5,9 +5,9 @@ const mockSavedCards = [
     id: 'saved-1',
     merchantName: 'COOP',
     label: 'Main grocery card',
-    codeValue: '5991234567890',
+    codeValue: '5991234567894',
     codeType: 'ean13',
-    lastDigits: '7890',
+    lastDigits: '7894',
     brandHex: '#D62828',
   ),
   SavedCardModel(
@@ -23,9 +23,9 @@ const mockSavedCards = [
     id: 'saved-3',
     merchantName: 'BookPoint',
     label: 'Book club card',
-    codeValue: '981234567890',
+    codeValue: '9812345678902',
     codeType: 'ean13',
-    lastDigits: '7890',
+    lastDigits: '8902',
     brandHex: '#7C3AED',
   ),
 ];
